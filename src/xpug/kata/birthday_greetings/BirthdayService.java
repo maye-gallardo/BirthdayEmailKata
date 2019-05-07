@@ -6,24 +6,20 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 public class BirthdayService {
-	int numberOfGreetingsSent;
-	EmployeeRepository repository;
-	EmailService mail;
+	private EmployeeRepository repository;
+	private EmailService mail;
 	
 	public BirthdayService(EmployeeRepository repository, EmailService mail) {
 		this.repository = repository;
 		this.mail = mail;
 	}
 	
-	public BirthdayService() {
-	}
 
 	public void sendGreetings(OurDate ourDate) throws IOException, ParseException, AddressException, MessagingException {
 		List<Employee> employees = repository.getAllEmployees();
 		for(Employee employee : employees) {
 			if (employee.isBirthday(ourDate)) {
 				mail.sendMessage("sender@here.com", employee);
-				numberOfGreetingsSent++;
 			}
 		}
 		
@@ -40,7 +36,4 @@ public class BirthdayService {
 		}
 	}
 
-	public int quantityOfGreetingsSent() {
-		return numberOfGreetingsSent;
-	}
 }
